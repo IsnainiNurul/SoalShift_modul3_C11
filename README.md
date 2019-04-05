@@ -131,6 +131,24 @@ Exit
 
 Pastikan terminal hanya mendisplay status detik ini sesuai scene terkait (hint: menggunakan system(“clear”))
 
-``
+Berikut ini adalah source code dan penjelasan :
+* Disini kami menggunakan pthread untuk Thread merupakan sebuah alur kontrol proses yang dapat dijadwalkan pengeksekusiannya oleh sistem operasi. Selanjutnya, bayangkan sebuah program main mempunyai berbagai prosedur (fungsi) dan fungsi-fungsi tersebut dapat dijalankan secara serentak dan atau bebas dijalankan oleh sistem operasi, sehingga pthread sangat diperlukan.
+* Dan disini kami menggunakan 9 pthread (yang nantinya akan menampung thread tersebut.
+* Penjelasan source code dibawah ini, perintah ini untuk melakukan getch yaitu untuk menginputkan integer tanpa perintah enter.
 
-``
+```int mygetch(void)
+{
+   struct termios oldt,
+   newt;
+   int ch;
+   tcgetattr( STDIN_FILENO, &oldt );
+   newt = oldt;
+   newt.c_lflag &= ~( ICANON | ECHO );
+   tcsetattr( STDIN_FILENO, TCSANOW, &newt );
+   ch = getchar();
+   tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
+   return ch;
+}
+```
+* Perintah source code dibawah ini, perintah berikut ini untuk menggenerate sebanyak 9 pthread dan akan menjalankan counter, 
+```void* playandcount(void *arg)```
